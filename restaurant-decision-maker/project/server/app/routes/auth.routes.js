@@ -36,4 +36,6 @@ module.exports = function(app) {
 
   app.get("/api/auth/checkUsernameTaken", verifySignUp.checkDuplicateUsernameOrEmail);
 
+  app.get("/api/getRestaurants", controller2.getRestaurants);
+
 };
