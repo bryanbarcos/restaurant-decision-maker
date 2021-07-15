@@ -1,7 +1,32 @@
 <h1>Welcome to the restaurant selector app</h1>
-<p>Randomly choose where to eat if you can't decide</p>>
+<h4>Randomly choose where to eat if you can't decide</h4>
+<br>
+<p>Your Restaurants</p>
+<ng-container class="container">
+    <div class="border">
+        <button class="btn btn-md btn-outline-primary">
+          <i class="fa fa-user"></i>Add Restaurant</button>
+      </div>
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+          <th>Restaurant Name</th>
+          <th>Your Tags</th>
+          <th></th>
 
-<div class="container">
-
-
-</div>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let res of restaurants">
+          <td><span>{{res.name}}</span></td>
+          <td><span>{{res.tags}}</span></td>
+          <td>
+            <button class="btn btn-sm btn-warning">
+              <i class="fa fa-edit"></i>Edit</button>
+            <button class="btn btn-sm btn-danger">
+              <i class="fa fa-remove"></i>Delete</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </ng-container>

@@ -144,7 +144,7 @@ exports.deleteRestaurant = (req, res, next) => {
 
 // get users restaurants and tags
 exports.getRestaurants = (req, res) => {
-    User.find({ username: req.query.username }, {restaurants:1, _id:0})
+    User.findOne({ username: req.query.username }, {restaurants:1, _id:0})
     .exec((err, user) => {
         if (err) {
             res.status(500).send({ message: err });
@@ -152,7 +152,7 @@ exports.getRestaurants = (req, res) => {
         }
 
         if (user) {
-            res.status(200).send(user);
+            res.json(user.restaurants)
         }
     })
 }
