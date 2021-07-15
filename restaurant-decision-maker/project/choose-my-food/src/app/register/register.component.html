@@ -1,0 +1,26 @@
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+    <mat-form-field class="register-full-width">
+        <label>Username</label>
+        <input matInput formControlName="username" type="text" name="none">
+        <mat-error *ngIf="this.registerForm.controls.username.hasError('required')" >Username required</mat-error>
+        <mat-error *ngIf="this.registerForm.controls.username.hasError('userNameExists')" >Username not available</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="register-full-width">
+        <label>Password</label>
+        <input matInput formControlName="password" type="password" name="none">
+        <mat-error *ngIf="this.registerForm.controls.password.hasError('required')" >Password required</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" class="button" type="submit">Submit</button>
+
+
+</form>
+
+<div class="success" *ngIf="showSuccessMessage">
+    Registration Successful
+</div>
+
+<div class="alert" *ngIf="serverErrorMessages">
+    {{serverErrorMessages}}
+</div>

@@ -1,0 +1,25 @@
+<form [formGroup]="loginForm" class="login-form" (ngSubmit)="onSubmit()">
+
+    <mat-form-field class="login-full-width" appearance="fill">
+        <input matInput placeholder="Username" formControlName="username" >
+        <mat-error *ngIf="this.loginForm.controls.username.hasError('required')" >Username required</mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class="login-full-width" appearance="fill">
+        <input matInput type="password" placeholder="Password" formControlName="password" >
+        <mat-error *ngIf="this.loginForm.controls.password.hasError('required')" >Password required</mat-error>
+
+    </mat-form-field>
+
+    <button mat-raised-button color="primary">Login</button>
+
+</form>
+
+<div class="success" *ngIf="showSuccessMessage">
+    Login Successful
+</div>
+
+<div class="alert" *ngIf="serverErrorMessages">
+    {{serverErrorMessages}}
+</div>
