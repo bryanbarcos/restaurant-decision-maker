@@ -1,7 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
-import { RestaurantsService } from '../_services/restaurants.service';
-//import { Restaurant } from '../_services/restaurants.service';
+import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogActions, MatDialogContainer, MatDialogContent } from '@angular/material/dialog';
 
 const baseUrl = 'http://localhost:3000/api';
 
@@ -25,8 +24,8 @@ export class MainComponent implements OnInit {
   public restaurants!: Restaurant[]
 
   constructor(
-    private restaurantService: RestaurantsService,
-    private http: HttpClient
+    private http: HttpClient,
+    public dialog: MatDialog
   ) {  }
 
   ngOnInit() {
@@ -43,4 +42,18 @@ export class MainComponent implements OnInit {
     )
   }
 
+  openDialog() {
+    const dialogRef = this.dialog.open(AddRestaurantDialog);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
 }
+
+@Component({
+  selector: 'add-restaurant-dialog',
+  templateUrl: 'add-restaurant-dialog.html',
+})
+export class AddRestaurantDialog {}
