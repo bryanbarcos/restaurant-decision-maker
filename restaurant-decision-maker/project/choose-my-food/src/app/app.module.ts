@@ -21,6 +21,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { MainComponent } from './main/main.component';
+import { AddRestaurantDialog } from './main/main.component'
+import { MatChipsModule } from '@angular/material/chips';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -30,7 +33,8 @@ import { MainComponent } from './main/main.component';
     HomeComponent,
     RegisterComponent,
     UserComponent,
-    MainComponent
+    MainComponent,
+    AddRestaurantDialog
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,9 @@ import { MainComponent } from './main/main.component';
     MatInputModule,
     ReactiveFormsModule,
     MatButtonModule,
-    MatDialogModule
+    MatDialogModule,
+    MatChipsModule,
+    FormsModule
 
   ],
   providers: [AuthService, 

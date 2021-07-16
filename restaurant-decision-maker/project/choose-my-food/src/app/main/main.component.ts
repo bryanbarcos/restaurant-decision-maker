@@ -1,6 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogActions, MatDialogContainer, MatDialogContent } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormBuilder } from '@angular/forms';
+import { RestaurantsService } from '../_services/restaurants.service';
 
 const baseUrl = 'http://localhost:3000/api';
 
@@ -43,17 +45,85 @@ export class MainComponent implements OnInit {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(AddRestaurantDialog);
+    const dialogRef = this.dialog.open(AddRestaurantDialog, {
+      width: '500px',
+      data: {}
+    });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+      console.log('The dialog was closed');
     });
   }
 
 }
 
+export interface Tags {
+  value: string;
+}
+
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {MatChipInputEvent} from '@angular/material/chips';
+
 @Component({
   selector: 'add-restaurant-dialog',
   templateUrl: 'add-restaurant-dialog.html',
+  styleUrls: ['./main.component.css']
+
 })
-export class AddRestaurantDialog {}
+export class AddRestaurantDialog {
+
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  tags: Tags[] = [];
+  newRestaurant!: string;
+  change_me!: {
+    "tags": Tags[],
+    "name": string,
+    "username": string
+  }
+
+  constructor(
+    private restaurantService: RestaurantsService,
+    private fb: FormBuilder,
+    public dialogRef: MatDialogRef<AddRestaurantDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: Tags) {}
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add tag
+    if (value) {
+      this.tags.push({value});
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+  }
+  remove(tags: Tags): void {
+    const index = this.tags.indexOf(tags);
+
+    if (index >= 0) {
+      this.tags.splice(index, 1);
+    }
+  }
+
+  onSubmit() {
+    this.change_me = {
+      "tags": this.tags, 
+      "name": this.newRestaurant, 
+      "username": "natasha"
+    };
+    this.restaurantService.addRestaurant(this.change_me).subscribe(
+      res => {
+        console.log("very nice");
+      },
+      err => {
+        console.log("failed");
+      }
+    )
+
+  }
+
+}

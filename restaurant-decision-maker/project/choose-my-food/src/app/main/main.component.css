@@ -17,3 +17,8 @@ th, td {
   table .btn{
     margin: 2px;
   }
+
+  .example-chip-list {
+    width: 100%;
+  }
+
