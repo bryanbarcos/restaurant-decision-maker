@@ -9,7 +9,7 @@ const baseUrl = 'http://localhost:3000/api';
 
 export class Restaurant {
   constructor(
-    public tags: string[],
+    public tags: Tags[],
     public name: string
   ) {
 
@@ -39,7 +39,8 @@ export class MainComponent implements OnInit {
     this.http.get<any>(baseUrl + '/getRestaurants', {params: params}).subscribe(
       response => {
 
-        this.restaurants = response;     
+        this.restaurants = response; 
+        console.log(response);    
       }
     )
   }

@@ -17,9 +17,11 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let res of restaurants">
+        <tr *ngFor="let res of restaurants; let i = index">
           <td><span>{{res.name}}</span></td>
-          <td><span>{{res.tags}}</span></td>
+          <td><span>
+            <li *ngFor="let tag of res.tags; let j = index">{{tag.value}}</li>
+          </span></td>
           <td>
             <button class="btn btn-sm btn-warning">
               <i class="fa fa-edit"></i>Edit</button>
@@ -31,4 +33,4 @@
       </table>
     </ng-container>
 
-    
+
