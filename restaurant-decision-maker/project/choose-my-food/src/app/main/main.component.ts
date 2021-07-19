@@ -4,6 +4,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { FormBuilder } from '@angular/forms';
 import { RestaurantsService } from '../_services/restaurants.service';
 import { AuthService } from '../_services/auth.service';
+import { Router } from '@angular/router';
+
 
 const baseUrl = 'http://localhost:3000/api';
 
@@ -29,11 +31,13 @@ export class MainComponent implements OnInit {
   constructor(
     private http: HttpClient,
     public dialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router,
   ) {  }
 
   ngOnInit() {
     this.restaurants = this.getRestaurants(this.authService.currentUser);
+    console.log(this.authService.currentUser);
   }
 
   getRestaurants(user: any): any{
@@ -55,7 +59,13 @@ export class MainComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+      this.getRestaurants(this.authService.currentUser);
+
     });
+  }
+
+  onDelete() {
+    
   }
 
 }
@@ -90,6 +100,7 @@ export class AddRestaurantDialog {
   constructor(
     private restaurantService: RestaurantsService,
     private fb: FormBuilder,
+    private authService: AuthService,
     public dialogRef: MatDialogRef<AddRestaurantDialog>,
     @Inject(MAT_DIALOG_DATA) public data: Tags) {}
 
@@ -116,7 +127,7 @@ export class AddRestaurantDialog {
     this.change_me = {
       "tags": this.tags, 
       "name": this.newRestaurant, 
-      "username": "natasha"
+      "username": this.authService.currentUser
     };
     this.restaurantService.addRestaurant(this.change_me).subscribe(
       res => {
@@ -126,6 +137,7 @@ export class AddRestaurantDialog {
         console.log("failed");
       }
     )
+
 
   }
 
