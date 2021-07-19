@@ -30,8 +30,6 @@ module.exports = function(app) {
 
   app.post("/api/addTags", controller2.addTags);
 
-  app.post("/api/deleteTags", controller2.deleteTags);
-
   app.post("/api/deleteRestaurant", controller2.deleteRestaurant);
 
   app.get("/api/auth/checkUsernameTaken", verifySignUp.checkDuplicateUsernameOrEmail);

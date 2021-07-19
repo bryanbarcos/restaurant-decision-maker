@@ -1,10 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormBuilder } from '@angular/forms';
 import { RestaurantsService } from '../_services/restaurants.service';
 import { AuthService } from '../_services/auth.service';
-import { Router } from '@angular/router';
 
 
 const baseUrl = 'http://localhost:3000/api';
@@ -28,11 +26,17 @@ export class MainComponent implements OnInit {
 
   public restaurants!: Restaurant[]
 
+  userData !: {
+    "username": string,
+    "name": string,
+    "tags": Tags[]
+  }
+
   constructor(
     private http: HttpClient,
     public dialog: MatDialog,
     private authService: AuthService,
-    private router: Router,
+    private restaurantService: RestaurantsService
   ) {  }
 
   ngOnInit() {
@@ -64,8 +68,20 @@ export class MainComponent implements OnInit {
     });
   }
 
-  onDelete() {
-    
+  onDelete(restaurant: Restaurant) {
+    this.userData = {
+      username: this.authService.currentUser,
+      name: restaurant.name,
+      tags: restaurant.tags
+    }
+    this.restaurantService.deleteRestaurant(this.userData).subscribe(
+      res => {
+        this.getRestaurants(this.authService.currentUser);
+      },
+      err => {
+      }
+    )
+
   }
 
 }
@@ -99,7 +115,6 @@ export class AddRestaurantDialog {
 
   constructor(
     private restaurantService: RestaurantsService,
-    private fb: FormBuilder,
     private authService: AuthService,
     public dialogRef: MatDialogRef<AddRestaurantDialog>,
     @Inject(MAT_DIALOG_DATA) public data: Tags) {}
