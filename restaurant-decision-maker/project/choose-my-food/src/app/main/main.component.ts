@@ -3,6 +3,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder } from '@angular/forms';
 import { RestaurantsService } from '../_services/restaurants.service';
+import { AuthService } from '../_services/auth.service';
 
 const baseUrl = 'http://localhost:3000/api';
 
@@ -27,11 +28,12 @@ export class MainComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private authService: AuthService
   ) {  }
 
   ngOnInit() {
-    this.restaurants = this.getRestaurants('natasha');
+    this.restaurants = this.getRestaurants(this.authService.currentUser);
   }
 
   getRestaurants(user: any): any{

@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit {
         console.log('success');
         this.showSuccessMessage = true;
         setTimeout(() => this.showSuccessMessage = false, 2000);
+        this.authService.currentUser = this.loginForm.value['username'];
         this.router.navigate(['/main']);
       },
       err => {
