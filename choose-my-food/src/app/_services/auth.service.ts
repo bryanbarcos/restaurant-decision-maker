@@ -14,6 +14,8 @@ const httpOptions = {
 
 export class AuthService {
 
+  currentUser!: string;
+
   constructor(private http: HttpClient) { }
 
   registerUser(data: any): Observable<any> {

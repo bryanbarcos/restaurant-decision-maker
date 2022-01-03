@@ -96,29 +96,6 @@ exports.addRestaurantWithTags = (req, res, next) => {
        });
 };
 
-// delete tags
-exports.deleteTags = (req, res, next) => {
-    var restaurantName = req.body.name;
-    User.updateOne(
-       { "username": req.body.username, "restaurants.name": restaurantName },
-       { $pull: { "restaurants.$.tags": { $in: req.body.tags }}},
-       { safe: true, upsert: true, useFindAndModify: false },
-       function(err, user) {
-           if(err) {
-               res.status(500).send({ message: err });
-               return;
-           }
-
-           if (!user) {
-               return res.status(404).send({ message: "User Not found." });
-             }
-
-           res.status(200).send({
-                message: "Tag(s) deleted successfully"
-           });
-       });
-};
-
 // delete a restaurant
 exports.deleteRestaurant = (req, res, next) => {
     var restaurantName = req.body.name;
@@ -141,4 +118,19 @@ exports.deleteRestaurant = (req, res, next) => {
            });
        });
 };
+
+// get users restaurants and tags
+exports.getRestaurants = (req, res) => {
+    User.findOne({ username: req.query.username }, {restaurants:1, _id:0})
+    .exec((err, user) => {
+        if (err) {
+            res.status(500).send({ message: err });
+            return;
+        }
+
+        if (user) {
+            res.json(user.restaurants)
+        }
+    })
+}
 

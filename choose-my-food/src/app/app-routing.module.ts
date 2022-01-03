@@ -17,6 +17,9 @@ const routes: Routes = [
   },
   {
     path: 'main', component: MainComponent
+  },
+  {
+    path: 'main/:username', component: MainComponent
   }
 ];
 

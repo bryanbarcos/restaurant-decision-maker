@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AuthService } from './_services/auth.service';
 
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field'; 
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -20,6 +21,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material/core';
 import { MainComponent } from './main/main.component';
+import { AddRestaurantDialog } from './main/main.component'
+import { MatChipsModule } from '@angular/material/chips';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -29,7 +33,8 @@ import { MainComponent } from './main/main.component';
     HomeComponent,
     RegisterComponent,
     UserComponent,
-    MainComponent
+    MainComponent,
+    AddRestaurantDialog
   ],
   imports: [
     BrowserModule,
@@ -39,7 +44,10 @@ import { MainComponent } from './main/main.component';
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatDialogModule,
+    MatChipsModule,
+    FormsModule
 
   ],
   providers: [AuthService, 
